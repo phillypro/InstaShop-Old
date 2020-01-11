@@ -1,0 +1,22 @@
+<!-- add to cart -->
+{% section 'External-Add-To-Cart' %}
+<!-- End add to cart-->
+
+
+
+
+<!-- Frequently Bought Popups -->
+{% capture frequently-bought %}{% section 'frequently-bought' %}{% endcapture %}
+{% assign frequently-bought =  frequently-bought | split: '<!--split-->' %}
+{% assign frequently-bought-with-popups = frequently-bought.last %}
+{{ frequently-bought-with-popups }}
+<!-- Frequently Bought Popup Modals -->
+
+
+{% section 'Popup' %}
+
+
+{% section 'Policy-Terms' %}
+
+
+

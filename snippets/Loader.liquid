@@ -1,0 +1,6 @@
+{% capture Load %}
+{% section 'Loader' %}
+{% endcapture %}
+{% assign Load2 = Load | split: '<style>' %}
+{% assign Load3 = Load2[1] | split: '</style>' %}
+{{ Load3[0] }}

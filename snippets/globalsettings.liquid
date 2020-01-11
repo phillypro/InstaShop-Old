@@ -1,0 +1,9 @@
+{% capture style %}
+{% section 'Homepage' %}
+{% endcapture %}
+
+{% assign style1 = style | split: '<!-- add_to_cart_background_color -->' %}
+{% assign style2 = style1[1] | split: '<!-- END add_to_cart_background_color -->' %}
+<style>
+{{ style2[0] }}
+</style>

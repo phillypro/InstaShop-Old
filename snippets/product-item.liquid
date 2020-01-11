@@ -1,0 +1,41 @@
+{% comment %}Is this product on sale?{% endcomment %}
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+<li class="{% unless product.available %} sold-out{% endunless %}{% if on_sale %} on-sale{% endif %}">
+
+  
+   <a class="product" href="{{ product.url | within: collection }}">
+      <div class="image">
+         {% if product.featured_image %}<img src="{{ product.featured_image | img_url: '1024x1024' }}" />{% endif %}  
+      </div>
+      <div class="details">
+        <div class="tags">
+        {% for tag in product.tags %}  
+          {{ tag }}
+        {% endfor %}
+        </div>
+        <div class="title">
+          {{ product.title }}
+        </div>
+          <!-- Yotpo Reviews Summary code -->                   
+            {% include 'Yotpo' %}             
+          <!-- END Yotpo Reviews Summary code --> 
+        
+        
+        <div class="price">
+           {% if product.price_varies %}From{% endif %}
+  {{ product.price | money }}
+  {% if on_sale %}
+    <s class="compare-at-price">{{ product.compare_at_price | money }}</s>
+  {% endif %}
+        </div>
+          <span class="add globalbutton">Add</span>   
+      </div>
+   </a>
+
+</li>
+
+

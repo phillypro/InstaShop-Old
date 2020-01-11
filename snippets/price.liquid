@@ -1,0 +1,15 @@
+{% assign formatted_price = price | money %}
+
+{% unless settings.show_dollar_symbol %}
+  {% assign formatted_price = formatted_price %}
+{% endunless %}
+
+{% unless shop.money_format contains 'money' %}
+    {% if shop.money_format contains '{{amount}}' %}
+      {% capture formatted_price %}{{ formatted_price | replace: '.00' | replace: '.','<sup>' }}</sup>{% endcapture %}
+    {% elsif shop.money_format contains '{{amount_with_comma_separator}}' %}
+      {% capture formatted_price %}{{ formatted_price | replace: ',','<sup>' }}</sup>{% endcapture %}
+    {% endif %}
+{% endunless %}
+
+{{ formatted_price }}
