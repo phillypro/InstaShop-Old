@@ -1,0 +1,111 @@
+{% assign add_to_cart = 'Add to cart' %}
+{% assign sold_out = 'Sold Out' %}
+{% assign unavailable = 'Unavailable' %}
+{% assign hide_default_title = false %}
+        {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+          {% assign hide_default_title = true %}
+        {% endif %}
+<script>
+  window.currentProduct =  {{ product | json }};
+</script>
+<div itemscope itemtype="http://schema.org/Product" class="product-inner">
+   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}" />
+   <meta itemprop="image" content="{{ product | img_url: 'grande' }}" />
+   {% form 'product', product, data-ajax: 'false' %} 
+      <div class="product-info">
+         <h1>{{ product.title }}</h1>
+        <div id="product-price-{{ product.id }}" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+        {% if product.available %}
+        <link itemprop="availability" href="http://schema.org/InStock" />
+        {% else %}
+        <link itemprop="availability" href="http://schema.org/OutOfStock" />
+        {% endif %}
+        <p>
+          {% assign variant = product.selected_or_first_available_variant %}
+          {% if product.compare_at_price > product.price %}
+          <span class="product-price on-sale" itemprop="price">{{ variant.price | money }}</span>
+          <s class="product-compare-price">{{ variant.compare_at_price | money }}</s>
+          {% else %}
+          <span class="product-price" itemprop="price">{{ variant.price | money }}</span>
+          {% endif %}
+        </p>
+      </div>
+      </div>   
+         <div class="swiper-container gallery-top">
+            <div class="swiper-wrapper">
+               {% if product.metafields.c_f.video %}
+               <div class="swiper-slide has-video">
+                  <div class="flex-video">
+                     <span class="mute"> Tap for sound</span>
+                     <video preload="auto" class="slider-video" id="product-player-{{ product.id }}" poster="{% if product.featured_image %}{{ product.featured_image | img_url: '1024x1024' }}{% endif %}" muted loop playsinline autoplay onclick="event.preventDefault();">
+                        <source src="{{ product.metafields.c_f.video }}" type="video/mp4">
+                     </video>
+                  </div>
+               </div>
+               {% endif %}
+               {% for image in product.images %}
+               <div class="swiper-slide">
+                  <div class="swiper-zoom-container">
+                     <img src="{{ image | product_img_url: 'master' }}" />
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+         </div>
+              
+  <div class="swiper-container gallery-thumbs">
+    <div class="swiper-wrapper">
+      {% for image in product.images %}
+      <div class="swiper-slide"><img src="{{ image | product_img_url: 'small' }}" /></div>
+      {% endfor %}
+    </div>
+  </div>
+           <div class="details">
+               {{ product.description }}
+            </div> 
+     
+            <div id="product-variants-{{ product.id }}" class="product-variants {% if hide_default_title %}dontclone{% endif %}">
+              <select id="product-select-{{ product.id }}" name="id" class="test"> 
+                {% for variant in product.variants %}  
+                <option{% if variant == product.selected_or_first_available_variant %} selected{% endif %} value="{{ variant.id }}">     
+                  {{ variant.title }} - {{ variant.price | money }}    
+                </option>  
+                {% endfor %} 
+              </select>
+            {% if product.variants.size >= 1 %}
+            {% for option in product.options %}
+            {% include 'swatch' with option %}
+            {% endfor %}
+            {% endif %}
+            </div>  
+        
+     
+     
+     
+            <div class="column">
+            {% section 'Multiselect' %}
+                    <div class="product-add" style="display:none;">
+        <input type="submit" name="add" id="add-{{ product.id }}" value="{{ add_to_cart | escape }}">
+        {{ form | payment_button }}
+      </div>
+            </div>
+     
+     
+     
+     
+     
+
+
+     
+     {% endform %}
+  {% assign yotpocode = "6102optoy" | split: "" | reverse | join: "" %}
+  {% if settings.yotpo_password == yotpocode %}
+  {% section 'Yotpo'%}
+  {% endif %}
+  
+  
+  
+</div>

@@ -1,0 +1,103 @@
+{% if cart.item_count > 0 %}
+
+<div class="cart-header">
+  <div class="row align-justify">
+    <div class="large-6 text-center columns">
+      
+      {% capture Header %}{% section 'Header' %}{% endcapture %}  
+      {% assign Header = Header | split: '<!--logo-->' %}  
+      {% assign Header = Header[1] | split: '<!--End logo-->' %}
+      {% assign Header = Header[0] %}
+      {{ Header }}
+    </div>
+    <div class="large-6 columns">
+      <h2>
+       Your Shopping Bag
+      </h2>
+      <span>
+      	A brief moment of silence for your previous hair provider
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<form id="cartform" action="/cart" method="post" data-ajax="false">
+<div class="row">
+<div class="large-12 columns">    
+  {% assign cartitems = cart.items %}
+  {% for item in cartitems reversed %}    
+     <div cart-item="{{ item.id }}" class="product-cart-wrap">
+       <div class="thumbnail-wrap" style="background-image:url({{ item | img_url: 'compact' }})">
+       </div>
+       <div class="quantity-display">
+         {{ item.quantity }}
+       </div>
+       <div class="product-title-wrap">
+         <a href="{{ item.url }}">
+       
+             {{ item.title }} 
+            <span>{{ item.product.type | capitalize }}</span>
+           
+         </a>
+       </div>
+       <div class="quantity-wrap">
+         <div>
+          <input type="number" name="updates[{{ item.id }}]" id="updates_{{ item.id }}" class="quantity input-number" min="0" max="99" value="{{ item.quantity }}"  />
+         </div>
+         <a href="#" product-id="{{ item.id }}" class="remove"></a>
+       </div>
+       <div class="price-wrap">
+         <span>
+          <span> 
+         {% include 'price' with item.line_price %}
+           </span>
+           <div>       
+            <!-- 
+<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1216 448v896q0 26-19 45t-45 19-45-19l-448-448q-19-19-19-45t19-45l448-448q19-19 45-19t45 19 19 45z"/></svg>
+       -->
+          </div>
+         </span>
+       </div>
+     </div>  
+  {% endfor %}
+  </div>
+</div>
+  
+  <div class="row align-justify">
+    <div class="large-12 small-12">
+      {% capture frequently-bought %}{% section 'frequently-bought' %}{% endcapture %}
+      {% assign frequently-bought =  frequently-bought | split: '<!--split-->' %}
+      {% assign frequently-bought-without-popups = frequently-bought.first %}
+      {{ frequently-bought-without-popups }}
+      
+ 
+    </div>
+  	<div class="large-12 small-12 columns cart-totals">
+      <ul>
+        {% section 'advanced-abandoned-cart' %}
+        <li>
+          <h2>Shipping for U.S</h2>
+          <span>
+            <span>$15</span> Discounted
+          </span>
+        </li>
+        <li>
+          <h2>Total</h2>
+         <span id="cart-total">{% include 'price' with cart.total_price %}</span>
+        </li>  
+      </ul>
+      <div>
+      <input id="checkoutnow" type="submit" name="checkout" value="Continue" />   
+      </div>
+    </div>
+  </div>
+  
+  
+  
+</form>
+  
+
+{% else %}
+{% include 'cart-empty' %} 
+{% endif %}

@@ -1,0 +1,72 @@
+{% comment %}
+The search.liquid template is not a required template.
+That search.liquid template is included in the current theme to make it easier for you 
+to customize your /search page.
+Whether you are using your own template for the search page or not,
+the {{ content_for_header }} tag in theme.liquid will always output the following on the /search page:
+<link rel="stylesheet" href="//cdn.shopify.com/s/global/search.css" type="text/css" />
+So the /search page is always styled by a globally-hosted stylesheet called search.css.
+You may override and complement that CSS in your theme's stylesheet.
+We are using a div#searchresults below so that the styles defined in search.css get
+applied to the elements on this page; the 'searchresults' id is used in the CSS
+selectors inside search.css.
+{% endcomment %}
+
+  
+{% comment %}
+search.performed is false when accessing the /search page without a 'q' parameter set
+in the URL. A shop-owner can link to the /search page from one of his link lists.
+It is important to show a search form on that page if search.performed is false.
+{% endcomment %}
+
+
+<div class="searchpage">
+
+
+{% if search.performed %}
+  
+  {% paginate search.results by 10 %}
+  
+    {% comment %}
+    Common pitfall to avoid: search.results should never be accessed before the opening 
+    paginate tag. Move the opening and closing paginate tags to the very top and bottom of your
+    search.liquid template if you need to.
+    If you fail to do the above, the pagination of search results will be broken.
+    search.results_count is fine to access in or out of the paginate block.
+    {% endcomment %}
+
+    {% if search.results_count == 0 %}  
+    <div class="row align-left searchresults">
+    <div class="column">
+      Your search for "{{ search.terms }}" did not yield any results.    
+          </div>
+  </div>
+    {% else %}
+  
+  <div class="row align-left searchresults">
+    <div class="column">
+      Your search for <b>"{{ search.terms }}"</b> found <b>{{ search.results_count }}</b> match.     
+    </div>
+  </div>
+      <ul  class="row align-left align-top">
+        {% for item in search.results %}
+    {% assign product = item %}    
+       {% if product.type == 'OPTIONS_HIDDEN_PRODUCT' %}
+    {% else %}
+      {% include 'product-item' %}
+    {% endif %}
+        
+      
+        
+        {% endfor %}
+      </ul>
+    {% endif %}    
+    
+    {% if paginate.pages > 1 %}
+      {{ paginate | default_pagination }}
+    {% endif %}
+  
+  {% endpaginate %}    
+  
+{% endif %}  
+</div>

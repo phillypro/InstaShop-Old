@@ -1,0 +1,14 @@
+{% layout none %}
+{% paginate collection.products by 1 %}
+
+{% for product in collection.products limit: 1 %}
+	
+{% for variant in product.variants limit: 1 %}          			
+ {         			
+"variant": {{variant.id}}
+}
+{% endfor %}
+{% endfor %}
+
+
+{% endpaginate %}
