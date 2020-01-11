@@ -101,7 +101,67 @@ color:{{ section.settings.link_color }}
            {% endfor %}
          {% endif %}
          
-         
+               <li id="contactCollapse" style="font-size:{{ section.settings.link_size }}%;" class="sub-collapse menu-item-ContactUs" data-enhanced="true" data-role="collapsible">
+
+           
+  <div class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+    <a href="#" class="ui-collapsible-heading-toggle" title="{{ link.title }}">
+       Contact Us
+    </a>
+    </div>
+         <div class="ui-collapsible-content ui-collapsible-content-collapsed contact-us" aria-hidden="true">
+              {% form 'contact', data-ajax:'false' %}
+           
+            {% if form.errors %}
+               <div class="errorForm feedback">
+                 <p>{{ 'contact.form.post_error' | t }}</p>          
+                 {% for field in form.errors %}
+                 <p>{{ 'contact.form.post_field_error_html' | t: field: field, error: form.errors.messages[field] }}</p>
+                 {% endfor %}
+               </div> 
+               {% endif %}   
+           
+           
+             {% if form.posted_successfully? %}
+               <div class="successForm feedback row">
+                 <div class="large-12 text-center column">
+                 <p>{{ 'contact.form.post_success' | t }}</p>
+                 </div>
+               </div>
+               {% else %} 
+           
+               <div class="formwrap">
+                <div class="row">
+                 
+                 <div class="large-12 small-12 message" style="color:{{ section.settings.link_color }};">
+                   {{ section.settings.message }}  
+                 </div>
+                  
+                 <div class="large-12 small-12">
+                   <input class="field" type="text" id="contactFormName" name="contact[name]" placeholder="What's your name?" data-role="none" />      
+                 </div>
+                 
+                 <div class="large-12 small-12">
+                   <input class="field" type="email" id="contactFormEmail" name="contact[email]" placeholder="and your email?" data-role="none" />
+                 </div>
+                  
+                 <div class="large-12 small-12">
+                   <textarea class="field" rows="4" cols="15" id="contactFormMessage" name="contact[body]" placeholder="Comments, thoughts or questions?" data-role="none"></textarea>
+                 </div> 
+                 
+                 <div class="large-12 small-12 contactsubmit">
+                   <input style="background-color:{{ section.settings.button_color }};" type="submit" id="contactFormSubmit" value="Send It" class="btn" data-role="none" />
+                 </div> 
+                  
+                </div>
+               </div>
+               <div class="confirmation" style="color:{{ section.settings.link_color }};">
+                 Thank You. We received your message and will contact you shortly
+               </div>
+               {% endif %}
+             {% endform %}
+          </div>
+         </li>
         
       </ul>
      </div>
