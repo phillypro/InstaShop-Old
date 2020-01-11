@@ -1,0 +1,347 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->  
+<head itemscope itemtype="http://schema.org/WebSite">
+  <meta charset="utf-8" />
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' /><![endif]-->
+
+
+  
+  <title itemprop='name'>
+  {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+  
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}" />
+  {% endif %}
+    
+  
+  
+<link rel="icon" type="image/png" href="{{ settings.favicon_image | img_url: 'pico' }}">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="{{ canonical_url }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />  
+   
+{{ 'jquery-3.4.1.js' | asset_url | script_tag }}  
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}       
+<script>window.shop = '{{ shop.permanent_domain | md5 }}'</script>  
+{% include 'open-graph-tags' %}
+{{ content_for_header }}  
+ <!-- create title and description -->
+ {% if template == 'collection' %}
+  {% assign meta_data = collection.metafields.global %}
+  {% assign page_description = meta_data.description_tag %}
+  {% assign page_name = collection.title %}
+  {% assign page_url = collection.url %}
+  {% elsif template == 'blog' %}
+  {% assign meta_data = blog.metafields.global %}
+  {% assign page_description = meta_data.description_tag %}
+  {% assign page_name = meta_data.title_tag %}
+  {% elsif template == 'article' %}
+  {% assign meta_data = article.metafields.global %}
+  {% assign page_description = meta_data.description_tag %}
+  {% assign page_name = page_title %}
+  {% elsif template == 'page' %}
+  {% assign meta_data = page.metafields.global %}
+  {% assign page_description = meta_data.description_tag %}
+  {% assign page_name = meta_data.title_tag %}
+  {% elsif template == 'index' %}
+  {% assign page_url = '/' %}
+ {% endif %}  
+<style>
+  
+/* Let's get this party started */
+@media only screen and (max-width: 32rem) {    
+::-webkit-scrollbar {
+     width: 0px;
+   background: transparent;
+
+}
+}
+
+  
+
+body, html {
+    height: 100% !important;
+    font-family: 'HelveticaNeueMedium',-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Ubuntu;
+    margin: 0px;
+}
+html {
+    color: rgb(34, 34, 34);
+    font-size: 1em;
+    line-height: 1.4;
+}
+body {
+    overflow-y: scroll;
+}
+
+
+body {
+    background-image: radial-gradient(56% 100%, rgb(255, 255, 255) 25%, rgba(51, 21, 78, 0.13) 100%);
+  background-repeat: no-repeat;
+      background-size: cover;
+      position: fixed;
+   height:100%;
+  width:100%;
+      display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.screen {
+    height: 100%;
+    width: 100%;
+    box-shadow: rgba(25, 29, 33, 0.5) 0px 25px 60px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    flex: 0 1 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: rgb(255, 255, 255);
+      will-change: transform;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -ms-perspective: 1000;
+    perspective: 1000;
+}
+@media only screen and (min-width: 32rem) {  
+  .screen {
+    max-width: 26.5rem;
+    flex: 0 1 26.5rem;
+ overflow:hidden;
+  }
+  .screen::-webkit-scrollbar {
+     width: 0px;
+   background: transparent;
+
+}
+}
+@media only screen and (min-height: 52rem) {  
+  .screen { 
+    max-height: 42rem;
+    }
+}  
+@media only screen and (min-height: 50rem) and (min-width: 32rem) {  
+    .screen {
+    border-radius: 0px;
+              overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+          overflow: hidden;  
+    }
+}
+@media only screen and (min-height: 50rem) and (min-width: 32rem) {  
+  .screen .swiper_Frame {
+   height:100% !important; 
+  }
+}
+  
+@media only screen and (min-width: 32rem) {    
+#swiper_Frame::-webkit-scrollbar-thumb {
+    background-color: rgba(140, 140, 140, 0.73);
+    border-radius: 5px;
+}  
+#swiper_Frame::-webkit-scrollbar {
+    width: 7px;
+    height: 10px;
+}
+#swiper_Frame::-webkit-scrollbar-track {
+    background-color: transparent;
+}  
+}  
+  
+
+@media only screen and (min-width: 32rem) {    
+.ui-panel-inner::-webkit-scrollbar-thumb {
+    background-color: rgba(140, 140, 140, 0.73);
+    border-radius: 5px;
+}  
+.ui-panel-inner::-webkit-scrollbar {
+    width: 7px;
+    height: 10px;
+}
+.ui-panel-inner::-webkit-scrollbar-track {
+    background-color: transparent;
+}  
+}   
+  
+  
+.screen .swiper_Frame {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity:0;
+     
+}
+.screen .swiper_Frame.popup-open {
+  overflow:hidden;
+}  
+.screen .loaded.swiper_Frame {
+ opacity:1; 
+}
+  
+
+  
+
+.footer .branding-tag-layout {
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 2em;
+    right: 1em;
+    left: 1em;
+    font-size: 14px;
+    color: rgb(136, 136, 136);
+    transform: translate3d(0px, 0px, 0px);
+    text-align: center;
+    line-height: 16px;
+    z-index: 1;
+    text-decoration:none;
+}  
+@media only screen and (min-height: 52rem) { 
+  .footer .branding-tag-layout {
+          display: flex;
+  }
+}
+@media only screen and (max-height: 52rem) and (min-width: 44rem) { 
+  .footer .branding-tag-layout {
+    left: initial;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    }
+}
+.footer .branding-tag-layout .branding-tag-header {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.footer .branding-tag-layout .branding-tag-header h6 {
+      font-weight: normal;
+      text-transform: uppercase;
+      text-align: right;
+      font-size: 12px;
+      line-height: 14px;
+      margin: 0px 8px 0px 0px;
+}
+@media only screen and (max-height: 52rem) and (min-width: 44rem) { 
+  .footer .branding-tag-layout .branding-tag-header h6 {
+             text-align: center;
+       }
+}
+
+.footer .branding-tag-layout .branding-tag-header path {
+          fill: rgba(0, 0, 0, 0.4);
+}
+.footer .branding-tag-layout .branding-tag-body {
+    text-align: left;
+    margin-left: 8px;
+    max-width: 14em;
+}
+@media only screen and (max-height: 52rem) and (min-width: 44rem) { 
+        .footer .branding-tag-layout .branding-tag-body {
+        margin-top: 20px;
+        margin-left: 0px;
+        max-width: 10.4em;
+        }
+        .footer .branding-tag-layout .branding-tag-body br {
+         display:none;
+        }
+}
+@media only screen and (max-width: 32rem) and (max-height: 47rem){    
+body, html, body .screen, body #swiper_Frame {
+overflow:hidden;
+-webkit-overflow-scrolling:auto;  
+}     
+}  
+</style>
+{% capture Setup %}{% section 'Setup-Instructions' %}{% endcapture %}  
+<style>  
+{% include 'Loader' %}  
+</style>
+</head>
+<body class="{% if cart.item_count > 0 %}hasitem{% endif %}">
+
+ <div id="screen" class="screen">
+    
+  
+ <div id="swiper_Frame" class="swiper_Frame"> 
+ {{ Setup }}  
+ {% section 'Loader' %}
+ {% include 'mobilemenu' %}   
+    <header  id="header" data-role="toolbar" data-type="header" data-position="fixed">
+         {% section 'Header-Notification' %}   
+         {% section 'Header' %}
+   </header>  
+     <div data-role="page" id="{{ template | replace: '.', '' }}{% if template == 'page' %}-{{ page.id }}{% endif %}{% if template == 'product' %}-{{ product.id }}{% endif %}{% if template == 'collection' %}-{{ collection.id }}{% endif %}"  {% if template == 'product' %}data-handle="{{ product.handle }}"{% endif %} data-url="{{ page_url }}" data-title="{{ page_name }}" data-name="{{ page_name }}" data-description="{{ page_description | url_encode }}" class="ui-page {% if template == 'collection' %}collection-page {% else %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% endif %}" {% if template == 'index' %}data-dom-cache="true"{% endif %}> 
+   <div role="main" class="ui-content">
+    {% if template == 'index' %}
+     {% include 'index' %} 
+    {% else %}   
+      {{content_for_layout}}
+    {% endif %}	
+   <!-- sitefooter -->
+  </div> <!-- End Content --> 
+    </div><!-- End Page --> 
+   {% include 'footer-modals' %}
+
+   
+   
+   
+ </div>
+ </div>
+ {% include 'footer' %}
+
+  
+<!-- yotpo -->  
+
+  
+
+{{ 'klaviyo.js' | asset_url | script_tag }} 
+{{ 'font-awesome.css'  | asset_url  | stylesheet_tag }}   
+{{ 'foundation.min.css'  | asset_url  | stylesheet_tag }}       
+  
+{{ 'jquery.mobile.custom.theme.min.css'  | asset_url  | stylesheet_tag }}   
+{{ 'jquery.mobile.custom.structure.min.css'  | asset_url  | stylesheet_tag }}    
+{{ 'swiper.min.css'  | asset_url  | stylesheet_tag }}    
+  
+{{ 'fonts.scss.css'  | asset_url  | stylesheet_tag }}  
+{{ 'style.scss.css' | asset_url | stylesheet_tag }}  
+  
+   <!-- JQM 1.5 -->
+  {{ 'jquery-start.js' | asset_url | script_tag }}
+  {{ 'jquery.mobile.custom.min.js' | asset_url | script_tag }}
+  {{ 'jquery.mobile.patches.js' | asset_url | script_tag }} 
+  <!-- END JQM 1.5 --> 
+  
+ {{ 'scrollreveal.min.js' | asset_url | script_tag }}  
+ {{ 'rellax.min.js' | asset_url | script_tag }} 
+  {{'hammer.min.js' | asset_url | script_tag  }}
+ {{ 'swiper.min.js' | asset_url | script_tag }}
+     {{ 'product.js' | asset_url | script_tag }} 
+     {% include 'ajaxify-cart' %}
+     {{ 'cart.js' | asset_url | script_tag }} 
+ {{ 'setup.js' | asset_url | script_tag }} 
+</body>
+</html>  
