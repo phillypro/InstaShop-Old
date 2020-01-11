@@ -1,0 +1,136 @@
+
+{% comment %}
+  Important notes about pagination:
+  - Never access collection.products before the opening paginate tag.
+  - Never paginate by more than 50.
+{% endcomment %}
+
+{% paginate collection.products by 50 %}
+
+<div class="row align-justify align-middle collection-title">
+  <div class="columns large-12 small-12">
+  <h1>{{ collection.title }}</h1>
+  </div>
+  
+  <div class="columns large-12 small-12">
+    {% comment %}
+    Collection sorting. Needs the JavaScript that is at the bottom of this file.
+  {% endcomment %}
+  {% if collection.products_count > 1 %}
+    <select class="sort-by right">
+      <option value="manual">Featured</option>
+      <option value="price-ascending">Price: Low to High</option>
+      <option value="price-descending">Price: Hight to Low</option>
+      <option value="title-ascending">A-Z</option>
+      <option value="title-descending">Z-A</option>
+      <option value="created-ascending">Oldest to Newest</option>
+      <option value="created-descending">Newest to Oldest</option>
+      <option value="best-selling">Best Selling</option>
+    </select>
+  {% endif %}
+  </div>
+
+</div>
+
+  {% comment %}
+    Listing all tags within the current collection.
+    Shopify uses product tags to manage subcategories inside collections.
+    See 'How do I create subcategories of products?' at 
+    http://bit.ly/1j1Dti4 for details.
+  {% endcomment %}
+
+
+
+  {% if collection.description.size > 0 %}
+    {{ collection.description }}
+  {% endif %}
+<ul class="row align-center align-bottom {{ section.settings.width }}">
+  {% for product in collection.products %}
+    
+    
+  
+  
+ {% comment %}Is this product on sale?{% endcomment %}
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+<li class="{% unless product.available %} sold-out{% endunless %}{% if on_sale %} on-sale{% endif %}">
+
+  
+   <a class="product" href="{{ product.url | within: collection }}">
+      <div class="image">
+         {% if product.featured_image %}<img src="{{ product.featured_image | img_url: '1024x1024' }}" />{% endif %}  
+      </div>
+      <div class="details">
+  
+        <div class="title">
+          {{ product.title }}
+        </div>
+        <div class="price">
+           {% if product.price_varies %}From{% endif %}
+  {{ product.price | money }}
+  {% if on_sale %}
+    <s class="compare-at-price">{{ product.compare_at_price | money }}</s>
+  {% endif %}
+        </div>
+          <span class="add globalbutton {% unless product.available %}sold-out{% endunless %}">{% unless product.available %}Out Of Stock{% else %}Add{% endunless %}</span>  
+      </div>
+   </a>
+
+</li> 
+  
+  
+  
+  
+  
+  
+  
+  
+   
+  {% else %}
+    <p>There are no products in this view.</p>
+  {% endfor %}
+ </ul>
+  {% if paginate.pages > 1 %}
+   <div class="row pagination-wrap align-center">
+     <div class="column large-12 text-center">
+    {{ paginate | default_pagination }}
+     </div>
+   </div>
+  {% endif %}
+
+{% endpaginate %}
+
+{% comment %}
+  JavaScript for collection sorting.
+{% endcomment %}
+
+
+
+
+{% schema %}
+  {
+    "name": "Collection",
+    "settings": [{
+   "type":      "header",
+   "content":   "Product Layout Settings"
+},{
+   "type": "radio",
+   "id": "width",
+   "options": [
+      { "value": "full", "label": "Full Width"},
+      { "value": "half", "label": "Half Width"}
+   ],
+   "default": "full",
+   "label": "Product Width"
+}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

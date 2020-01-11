@@ -1,0 +1,52 @@
+
+  <div id="variantcontroller"></div>
+   <a style="background:{{ section.settings.button_color }};" href="#">
+     <span id="label">{{ settings.addtocarttext }}</span>
+     <span id="external-product-price"></span>
+  </a>
+
+{% schema %}
+  {
+    "name": "Add To Cart Button",
+    "settings": [{
+       "id": "button_color",
+       "type": "color",
+       "label": "Button Color",
+       "default": "#5BC9D8"
+}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+
+$(document).one("shopify:section:select",'#shopify-section-External-Add-To-Cart',function(e){
+  
+  var body = $(this).closest('body');
+
+  if(!body.hasClass('product')) {
+     body.addClass('product product2');
+  }
+
+
+  $(document).one("shopify:section:deselect",'#shopify-section-External-Add-To-Cart',function(e){
+
+    if(body.hasClass('product2')) {
+     body.removeClass('product product2');
+    }
+
+    $(document).one("shopify:section:select",'#shopify-section-External-Add-To-Cart',function(e){
+  var body = $(this).closest('body');
+
+  if(!body.hasClass('product')) {
+     body.addClass('product product2');
+  }
+    }); 
+  });                           
+});            
+
+ 
+  
+{% endjavascript %}

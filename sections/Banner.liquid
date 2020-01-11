@@ -1,0 +1,150 @@
+<div class="banner-wrap">
+  <div class="swiper-container">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+   {% if section.settings.demo == true %}
+     <div class="swiper-slide">
+       <a target="_blank" href="https://www.youtube.com/watch?v=bL_X_GK69P4">
+         <img src="{{ 'banner.jpg' | asset_url }}" />
+      </a>
+     </div>      
+   {% endif %}   
+      
+   {% for block in section.blocks %}
+     {% case block.type %}
+      {% when 'Image' %}
+      <div class="swiper-slide">
+       <a href="{{ block.settings.url }}" {% if block.settings.url contains '#mailPopup' %}data-rel="popup" data-transition="slideupfade"{% endif %}>
+         <img src="{{ block.settings.image | img_url: '1024x1024' }}" />
+      </a>
+      </div>
+      {% when 'Video' %}
+      <div class="swiper-slide video-slide">
+      <a href="{{ block.settings.url }}">
+         <video preload="auto"  playsinline="" muted><source src="{{ block.settings.video }}" type="video/mp4"></video>
+      </a>
+      </div>
+     {% endcase %}
+  {% endfor %}   
+      </div>
+</div>
+</div>
+{% schema %}
+  {
+    "name": "Slide Banner",
+    "settings": [ {
+  "type": "checkbox",
+  "id": "demo",
+  "label": "Show Demo Banner",
+  "default": true,
+  "info": "disable this when you start adding your banners"
+},
+{
+       "type": "header",
+       "content": "Upgrade Your Look"
+},
+{
+       "type": "paragraph",
+       "content": "Digital Brandz can Design you additional Custom banners that will have your shop looking amazing [Click Here](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U84Z5VU6SLR3N)"
+}
+], 
+  "blocks": [
+    {
+     "type": "Image",
+     "name": "Image",
+     "settings" : [
+      {
+       "id": "image",
+       "type": "image_picker",
+       "label": "Image"
+      },
+      {
+       "id": "url",
+       "type": "url",
+       "label": "Link to"
+      }
+     ]
+    },
+    {
+     "type": "Video",
+     "name": "Video",
+     "settings" : [
+{
+   "type":      "header",
+   "content":   "Step 1. Convert Your Video File"
+},
+{
+   "type":      "paragraph",
+   "content":   "If your video is a .mov from an iphone you will need to convert it to MP4 [Convert To MP4](https://convertio.co/mp4-converter/)"
+},
+{
+   "type":      "header",
+   "content":   "Step 2. Optimize Video (Optional)"
+},
+{
+   "type":      "paragraph",
+   "content":   "This is optional but you can make your video load 10X faster for users if you upload it to this Free File Compressor [Optimize Video](https://www.youcompress.com/)"
+},
+{
+   "type":      "header",
+   "content":   "Step 3. Upload your Video"
+},
+{
+   "type":      "paragraph",
+   "content":   "Upload your video to your Shopify File Area [Watch How To Upload](https://youtu.be/bL_X_GK69P4?t=420)"
+},
+      {
+       "id": "video",
+       "type": "text",
+       "label": "MP4 URL"
+      },
+      {
+       "id": "url",
+       "type": "url",
+       "label": "Link to"
+      }
+     ]
+    }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+$(document).one("shopify:section:select",'#shopify-section-Banner',function(e){
+
+var myElement = $('#shopify-section-Banner');
+var topPos = myElement[0].offsetTop;
+
+if($(window).width() < 600) { 
+$('#index').animate({ scrollTop: topPos });    
+}else{
+$('#swiper_Frame').animate({ scrollTop: topPos });  
+}   
+
+$(document).one("shopify:section:deselect",'#shopify-section-Banner',function(e){
+$(document).one("shopify:section:select",'#shopify-section-Banner',function(e){
+
+var myElement = $('#shopify-section-Banner');
+var topPos = myElement[0].offsetTop;
+
+if($(window).width() < 600) { 
+$('#index').animate({ scrollTop: topPos });    
+}else{
+$('#swiper_Frame').animate({ scrollTop: topPos });  
+}  
+}); 
+});  
+});  
+
+
+$(document).on("shopify:section:select", '#shopify-section-Banner', function(e){
+bannerswiper();
+$('body').addClass('editing editbanner');
+$(document).one("shopify:section:deselect",function(e){
+$('body').removeClass('editbanner');
+})
+});     
+{% endjavascript %}

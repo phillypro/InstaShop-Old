@@ -1,0 +1,57 @@
+<div class="popupwrap popupwrap2" data-overlay-theme="b" data-role="popup" id="Shipping-Policy">
+      <a class="close" href="#" data-rel="back"></a>
+     
+      <div>
+      <div class="title">
+        <h2>Shipping Policy</h2>
+      </div>
+      <div class="content">
+        {{ section.settings.shipping_policy | replace: '(shop.name)', shop.name }}
+      </div>
+     </div>
+   </div>
+
+   <div class="popupwrap popupwrap2" data-overlay-theme="b" data-role="popup" id="Privacy-Policy">
+      <a class="close" href="#" data-rel="back"></a>
+     
+      <div>
+       <div class="title">
+        <h2>Privacy Policy</h2>
+      </div>
+     <div class="content">
+        {{ section.settings.privacy_policy | replace: '(shop.name)', shop.name }}
+      </div>
+     </div>
+   </div>
+{% schema %}
+  {
+    "name": "Policy & Terms",
+    "settings": [{
+   "type":      "header",
+   "content":   "Policy & Terms"
+},
+{
+   "type":      "paragraph",
+   "content":   "You can fill these out and customize your policies but we have pre-filled them for you"
+},
+{
+   "type": "richtext",
+   "id": "shipping_policy",
+   "label": "Shipping Policy",
+   "default": "<p>At <span style=\"text-decoration: underline;\">(shop.name)<\/span> our goal is to offer you the best shipping options, no matter where you live. Every day, we deliver to hundreds of customers across the world, ensuring that we provide the very highest levels of responsiveness to you at all times.<\/p>\n<p><\/p>\n<p>The time frame for order delivery is divided into two parts:<\/p>\n<p><\/p>\n<p>Processing time: Order verification, tailoring, quality check and packaging. All orders are sent to&nbsp; dispatched within&nbsp;48 hours after the order is placed on normal business days.<\/p>\n<p><\/p>\n<p>Shipping time: This refers to the time it takes for items to be shipped from our warehouse to the destination.&nbsp;International delivery&nbsp;usually takes about 15&ndash;30 business days. US orders are shipped by USPS, which is a US Postal Service product. After processing and leaving the warehouse, items usually take between&nbsp;2&nbsp;and&nbsp;7 days to arrive at their destination but can take longer from time to time.<\/p>"
+},
+{
+   "type": "richtext",
+   "id": "privacy_policy",
+   "label": "Privacy Policy",
+   "default": "<p>This privacy notice discloses the privacy practices for&nbsp;<span style=\"text-decoration: underline;\">(shop.name)<\/span>. This privacy notice applies solely to information collected by this website. It will notify you of the following:<\/p>\n<p>What personally identifiable information is collected from you through the website, how it is used and with whom it may be shared.What choices are available to you regarding the use of your data.The security procedures in place to protect the misuse of your information.How you can correct any inaccuracies in the information.<\/p>\n<p><strong>Information Collection, Use, and Sharing<\/strong>&nbsp;<br>We are the sole owners of the information collected on this site. We only have access to\/collect information that you voluntarily give us via email or other direct contact from you. We will not sell or rent this information to anyone.<\/p>\n<p>We will use your information to respond to you, regarding the reason you contacted us. We will not share your information with any third party outside of our organization, other than as necessary to fulfill your request, e.g. to ship an order.<\/p>\n<p>Unless you ask us not to, we may contact you via email in the future to tell you about specials, new products or services, or changes to this privacy policy.<\/p>\n<p><strong>Your Access to and Control Over Information<\/strong>&nbsp;<br>You may opt out of any future contacts from us at any time. You can do the following at any time by contacting us via the email address or phone number given on our website:<\/p>\n<p>See what data we have about you, if any.Change\/correct any data we have about you.Have us delete any data we have about you.Express any concern you have about our use of your data.<\/p>\n<p><strong>Security<\/strong>&nbsp;<br>We take precautions to protect your information. When you submit sensitive information via the website, your information is protected both online and offline.<\/p>\n<p>Wherever we collect sensitive information (such as credit card data), that information is encrypted and transmitted to us in a secure way. You can verify this by looking for a lock icon in the address bar and looking for \"https\" at the beginning of the address of the Web page.<\/p>\n<p>While we use encryption to protect sensitive information transmitted online, we also protect your information offline. Only employees who need the information to perform a specific job (for example, billing or customer service) are granted access to personally identifiable information. The computers\/servers in which we store personally identifiable information are kept in a secure environment.<\/p>\n<p><strong>If you feel that we are not abiding by this privacy policy, you should contact us immediately via&nbsp;Our Contact Form<\/strong><\/p>"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,88 @@
+
+<div class="header-notification" style=" font-size:{{ section.settings.fontsize }}px;
+{% if section.settings.background_color_2 contains 'transparent' %}
+      background-color:{{ section.settings.background_color }};                            
+  {% else %}     
+    background: -moz-linear-gradient(left, {{ section.settings.background_color }} 0%, {{ section.settings.background_color_2 }} 100%);
+    background: -webkit-linear-gradient(left, {{ section.settings.background_color }} 0%, {{ section.settings.background_color_2 }} 100%);
+    background: linear-gradient(to right, {{ section.settings.background_color }} 0%, {{ section.settings.background_color_2 }} 100%);                            
+  {% endif %}                                        
+color:{{ section.settings.text_color }};">
+    <div class="row align-middle align-center">
+      {% if section.settings.notification != '' %}
+      <div class="large-12 columns text-center">
+       {% if section.settings.url != '' %}
+        <a href="{{ section.settings.url }}" style="color:{{ section.settings.text_color }};" >
+        {% endif %}
+        {{ section.settings.notification }}
+        {% if section.settings.url != '' %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+</div>  
+
+
+{% schema %}
+  {
+    "name": "Notification Bar",
+    "settings": [ {
+        "id": "notification",
+        "type": "text",
+        "label": "Notification"
+      },
+ {
+        "id": "url",
+        "type": "url",
+        "label": "Link to"
+      },
+  {
+    "type":   "range",
+    "id":     "fontsize",
+    "min":       12,
+    "max":       18,
+    "step":     1,
+    "unit":      "px",
+    "label":     "Font Size",
+    "default":   15
+     },
+ {
+        "id": "background_color",
+        "type": "color",
+        "label": "Background Color",
+        "default": "#000000"
+      },{
+       "id": "background_color_2",
+       "type": "color",
+       "label": "Background Color #2 (Optional Gradient)",
+       "default": "transparent"
+},
+ {
+        "id": "text_color",
+        "type": "color",
+        "label": "Notification Color",
+        "default": "#FFFFFF"
+      }]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+.editnotification {
+	& #shopify-section-Header-Notification {
+    & .header-notification {
+      min-height:40px;
+     }
+	}
+}
+{% endstylesheet %}
+
+{% javascript %}
+ $(document).on("shopify:section:select",'#shopify-section-Header-Notification',function(e){
+ $('body').addClass('editing editnotification').trigger( "updatelayout" );
+     $(document).on("shopify:section:deselect",'#shopify-section-Header-Notification',function(e){
+        $('body').removeClass('editnotification').trigger( "updatelayout" );
+     });   
+});     
+console.log('test10');       
+{% endjavascript %}

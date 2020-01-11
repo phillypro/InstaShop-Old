@@ -1,0 +1,147 @@
+<div class="header-wrap" style="box-shadow: 1px 1px 24px rgba(0, 0, 0, 0.07);
+{% if section.settings.header_background_color_2 contains 'transparent' %}
+      background-color:{{ section.settings.header_background_color }};                            
+  {% else %}     
+    background: -moz-linear-gradient(left, {{ section.settings.header_background_color }} 0%, {{ section.settings.header_background_color_2 }} 100%);
+    background: -webkit-linear-gradient(left, {{ section.settings.header_background_color }} 0%, {{ section.settings.header_background_color_2 }} 100%);
+    background: linear-gradient(to right, {{ section.settings.header_background_color }} 0%, {{ section.settings.header_background_color_2 }} 100%);                            
+  {% endif %}">   
+<div class="row align-justify align-middle">
+      <div class="mobile-menu">
+       <a href="#shopify-section-Mobile-Menu">
+          <icon>
+          <i style="background-color:{{ section.settings.menu_icon_color }};"></i>
+          <i style="background-color:{{ section.settings.menu_icon_color }};"></i>
+          <i style="background-color:{{ section.settings.menu_icon_color }};"></i>
+          </icon>
+       </a>
+      </div>
+      <div class="text-center logo-wrap" style="max-width:{{ section.settings.logo_width }}%">
+        <!--logo-->
+        <a href="/" title="{{ shop.name }}" style="color:{{ section.settings.brand_name_color }};" data-transition="ngslide">
+          {% if section.settings.brand_logo_svg != '' %}
+            {{ section.settings.brand_logo_svg }}
+          {% else %}
+          {% capture logo %}{{ section.settings.brand_logo | img_url: 'compact' }}{% endcapture %}
+         {% if logo contains 'no-image' %} 
+        <style>
+       {{ section.settings.font | font_face }}
+       </style>
+          <span style='font-family: {{ section.settings.font.family }}; font-weight:{{ section.settings.font.weight }}; font-style:{{ section.settings.font.style }};font-size:{{ section.settings.font_size }}px;'>
+            {% if section.settings.brandname != '' %}
+             {{ section.settings.brandname }}
+            {% else %}
+             {{ shop.name }}
+            {% endif %}
+          </span>
+          {% else %}
+           <img alt="{{ shop.name}} logo" src="{{ section.settings.brand_logo | img_url: 'medium' }}" />
+          {% endif %}
+          {% endif %}
+        </a> 
+        <!--End logo-->
+      </div>
+     <script>window.password = '{{ settings.password }}'</script>  
+      <div class="cart-wrap">
+            <a class="cart-target {% if cart.item_count > 0 %}hasitem{% endif %}" href="/cart" title="View your shopping cart" style="color:{{ section.settings.cart_icon_color }};" data-transition="ngslide">               
+               <div class="cart-count-wrap"><span class="cart-count">{{ cart.item_count }}</span></div>  
+               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="{{ section.settings.cart_icon_color }}" fill-rule="nonzero" d="M12 7V6c0-1 1-2 2-2h4c1 0 2 1 2 2v1h7v19H5V7h7zm14 1H6v17h20V8zM13 6v1h6V6c0-.5-.5-1-1-1h-4c-.5 0-1 .5-1 1z"></path></svg>            </a>  
+      </div>
+    
+</div>
+</div>
+
+{% schema %}
+  {
+    "name": "Logo Header Bar",
+    "settings": [{
+   "type":      "header",
+   "content":   "Brand Name / Brand Logo"
+},      
+{
+       "id": "brandname",
+       "type": "text",
+       "label": "Brand Name"
+      },
+ {
+     "type": "font_picker",
+     "id": "font",
+     "label": "Font",
+     "default": "work_sans_n6"
+   },
+{
+    "type":   "range",
+    "id":     "font_size",
+    "min":       15,
+    "max":      40,
+    "step":     1,
+    "unit":      "px",
+    "label":     "Font Size",
+    "default":   25
+}, 
+      {
+       "id": "brand_logo",
+       "type": "image_picker",
+       "label": "Brand Logo"
+      },
+      {
+       "id": "brand_logo_svg",
+       "type": "html",
+       "label": "Brand Logo SVG (Optional)"
+      },
+{
+    "type":   "range",
+    "id":     "logo_width",
+    "min":       5,
+    "max":       60,
+    "step":     1,
+    "unit":      "%",
+    "label":     "Logo Width",
+    "default":   60
+},  
+{
+   "type":      "header",
+   "content":   "Colors"
+}, 
+{
+   "type":      "paragraph",
+   "content":   "Customize the color scheme of your header background and icons"
+},
+ {
+        "id": "header_background_color",
+        "type": "color",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      },{
+       "id": "header_background_color_2",
+       "type": "color",
+       "label": "Background Color #2 (Optional Gradient)",
+       "default": "transparent"
+},
+{
+       "id": "brand_name_color",
+       "type": "color",
+       "label": "Brand Name Color",
+       "default": "#000000"
+},
+{
+       "id": "menu_icon_color",
+       "type": "color",
+       "label": "Menu Icon Color",
+       "default": "#919191"
+},
+{
+       "id": "cart_icon_color",
+       "type": "color",
+       "label": "Cart Icon Color",
+       "default": "#000000"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

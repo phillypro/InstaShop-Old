@@ -1,0 +1,163 @@
+<!-- get all cart items into an array -->
+
+ {% for item in cart.items %}
+   {% if forloop.last == true %}
+    {% assign cartitems = cartitems | append: item.product.handle %}
+   {% else %}
+    {% assign cartitems = cartitems | append: item.product.handle | append: ',' %}
+   {% endif %}
+
+ {% endfor %}
+{% assign cartitems = cartitems | split: ',' %}
+
+
+
+<!-- see if anythings available -->
+{% assign available = '' %}
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'Upsell' %} 
+          {% assign compare = all_products[block.settings.upsell_info] %}  
+          {% if cartitems contains compare.handle %} 
+             {% else %}  
+             {% assign available = available | append: compare.handle %}
+         {% endif %}
+    {% endcase %}         
+{% endfor %}
+
+
+
+{% if available != '' %}
+<div class="frequently-bought-wrap">
+<h2>{{ section.settings.frequently-bought-title }}</h2>
+  
+<div class="swiper-container frequently-swiper">
+      <!-- Additional required wrapper -->
+          <div class="swiper-wrapper"> 
+  {% assign i = 0 %}
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'Upsell' %}
+
+{% assign upsell = all_products[block.settings.upsell_info] %}  
+{% if cartitems contains upsell.handle %}  
+{% else %}  
+ 
+ <div class="swiper-slide"> 
+<div class="row">  
+ <div class="columns"> 
+ <a href="#{{ upsell.handle }}{{ i }}" data-rel="popup"  data-transition="slideup" data-position-to="window" class="frequently-bought">
+   <div>
+     <div class="flex-video">
+     <img src="{{ upsell.featured_image | product_img_url: 'medium' }}" />
+     </div>
+   </div>
+   <div>
+     <h2>{{ upsell.title }}</h2>
+     <span>{% include 'price' with upsell.price %}</span>
+   </div>
+   <span>view</span>
+
+ </a>
+</div>
+</div>
+</div>   
+           
+{% endif %}
+{% assign i = i | plus: 1 %} 
+ 
+{% endcase %}         
+{% endfor %}
+  </div> 
+</div>   
+</div>
+
+{% endif %}
+</div>
+
+
+<!--split-->
+<div id="frequently-bought-popups"><!-- extra div because we cut out the first div of the section wrap -->
+{% assign i = 0 %}
+{% for block in section.blocks %}
+{% case block.type %}
+{% when 'Upsell' %}
+{% assign upsell = all_products[block.settings.upsell_info] %}  
+  
+     
+  
+
+   <div class="popupwrap" data-overlay-theme="b" data-role="popup" id="{{ upsell.handle }}{{ i }}">
+      <a class="close" href="#" data-rel="back"></a>
+      <div class="featured-image">
+       <img src="{{ upsell.featured_image | product_img_url: 'large' }}" />
+      </div>
+      <div>
+      <div>
+        <h2>{{ upsell.title }}</h2>
+        <span>{% include 'price' with upsell.price %}</span>
+      </div>
+      <div>
+        {{ block.settings.upsell_details }}
+      </div>
+      <div class="quantity-wrap">
+            <div class="input-group">
+             <span class="input-group-button">
+              <button type="button" class="btn btn-danger btn-number"  data-type="minus">
+                <span class="glyphicon glyphicon-minus">-</span>
+              </button>
+             </span>
+             <input type="number" name="quantity" class="quantity input-number input-group-field" value="1" min="1" max="10" />
+             <span class="input-group-button">
+              <button type="button" class="btn btn-success btn-number" data-type="plus">
+                  <span class="glyphicon glyphicon-plus">+</span>
+              </button>
+            </span>
+            </div>
+        <a data-rel="back" href="#" variant-id="{{ upsell.variants[0].id }}" class="frequently-add" id="frequently-bought-button">ADD<span id="frequently-bought-total" price="{{ upsell.price | money }}">{% capture newprice %}{% include 'price' with upsell.price %}{% endcapture %}{{ newprice | strip }}</span></a>    
+     </div>
+     </div>
+   </div>
+         
+
+{% assign i = i | plus: 1 %}  
+{% endcase %}         
+{% endfor %}
+  
+
+
+{% schema %}
+  {
+    "name": "Frequently Bought",
+    "settings": [{
+        "id": "frequently-bought-title",
+        "type": "text",
+        "label": "Title",
+"default": "Frequently bought together"
+      }], 
+  "blocks": [
+    {
+     "type": "Upsell",
+     "name": "Upsell",
+     "settings" : [
+      {
+       "id": "upsell_info",
+       "type": "product",
+       "label": "Upsell"
+      },
+      {
+       "id": "upsell_details",
+       "type": "textarea",
+       "label": "Small Description"
+      }
+     ]
+    }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

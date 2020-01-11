@@ -1,0 +1,70 @@
+{% if section.settings.advanced_klaviyo_list != '' and section.settings.advanced-discount != '' %}
+<li class="top">
+<input id="discount" autocomplete="off" type="hidden" name="discount" /> 
+<h2>Promo</h2>
+<a id="advanced-abandoned-cart-link" href="#advanced-abandoned-cart" data-rel="popup" data-transition="pop" onclick="triggerklaviyo(); ga('send', {hitType: 'event',eventCategory: 'Cart',eventAction: 'Discount Offer',eventLabel: 'Opened Discount offer'});">Get discount</a>
+<div id="advanced-abandoned-cart" class="advanced-popup-wrap" data-role="popup">
+  <div class="advanced-popup" style="background-color:{{ section.settings.advanced_background_color }};">
+    <h4>
+      {{ section.settings.advanced-header }}
+    </h4>
+    <div>
+     <form></form>
+     <form id="email_signup" class="klaviyoform" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+      <input type="hidden" name="g" value="{{ section.settings.advanced_klaviyo_list }}">
+      <input type="hidden" name="code" value="{{ section.settings.advanced-discount }}">
+      <input type="email" value="" name="email" id="k_id_email" placeholder="Your@email.com">
+      <button type="submit" class="klaviyo_submit_button">Unlock</button>
+     </form>
+      <div>
+         will apply at checkout
+      </div>
+    </div>
+  </div>
+</div>   
+</li>
+{% endif %}
+{% schema %}
+  {
+    "name": "Advanced Abandoned Cart",
+    "settings": [   
+         {
+        "id": "advanced_klaviyo_list",
+        "type": "text",
+        "label": "Klaviyo List Id (ex: m4stTTd)"
+      },
+      {
+        "type": "color",
+        "id": "advanced_background_color",
+        "label": "Background Color",
+        "default": "#B350B4"
+      },
+      {
+        "type": "color",
+        "id": "advanced_button_color",
+        "label": "Button Color",
+        "default": "#3ACE9A"
+      },
+      {
+        "id": "advanced-header",
+        "type": "text",
+        "label": "Header",
+"default": "Unlock Your Discount"
+      },
+     {
+        "id": "advanced-discount",
+        "type": "text",
+        "label": "Discount Code"
+      }
+     ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+
+{% endstylesheet %}
+
+{% javascript %}
+
+{% endjavascript %}
