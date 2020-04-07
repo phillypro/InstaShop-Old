@@ -146,8 +146,8 @@ jQuery('#' + productjson.id + ' .swatch[data-option-index="' + option_index + '"
   }
 });
 //if variant availble  
-//jQuery('#frontpage-' + productjson.id + ' .swatch[data-option-index="' + option_index + '"] .').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
-//jQuery('#' + productjson.id + ' .swatch[data-option-index="' + option_index + '"] .').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');  
+//jQuery('#frontpage-' + productjson.id + ' .swatch[data-option-index="' + option_index + '"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+//jQuery('#' + productjson.id + ' .swatch[data-option-index="' + option_index + '"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');  
   
   
 var selectCallback = function(variant, selector) {
@@ -165,7 +165,7 @@ var selectCallback = function(variant, selector) {
     if (variant.available) {         
       // Enabling add to cart button.
       external.removeClass('sold-out');
-      external.find('a #label').text('Add to bag');  
+      external.find('a #label').text('{{ settings.addtocarttext }}');  
       // If item is backordered yet can still be ordered, we'll show special message.
       if (variant.inventory_management && variant.inventory_quantity <= 0) {
         jQuery('#selected-variant-' + productjson.id + '-frontpage').html(productjson.title + ' - ' + variant.title);
@@ -178,25 +178,31 @@ var selectCallback = function(variant, selector) {
   
       // Variant is sold out.
       jQuery('#backorder-' + productjson.id + '-frontpage').addClass('hidden');
-      jQuery('#add-' + productjson.id + '-frontpage').val(null).addClass('disabled').prop('disabled', true); 
+      jQuery('#add-' + productjson.id + '-frontpage').val({{ sold_out | json }}).addClass('disabled').prop('disabled', true); 
       external.addClass('sold-out');
       external.find('a #label').text('out of stock');  
     }
     
     // Whether the variant is in stock or not, we can update the price and compare at price.
     if ( variant.compare_at_price > variant.price ) {
-      jQuery('#product-price-' + productjson.id + '-frontpage').html('<span class="product-price on-sale">'+ Shopify.formatMoney(variant.price, "") +'</span>'+'&nbsp;<s class="product-compare-price">'+Shopify.formatMoney(variant.compare_at_price, "")+ '</s>');
-      jQuery('#external-product-price').html(Shopify.formatMoney(variant.price, "")); 
+      jQuery('#product-price-' + productjson.id + '-frontpage').html('<span class="product-price on-sale">'+ Shopify.formatMoney(variant.price, "{{ shop.money_format }}") +'</span>'+'&nbsp;<s class="product-compare-price">'+Shopify.formatMoney(variant.compare_at_price, "{{ shop.money_format }}")+ '</s>');
+      jQuery('#external-product-price').html(Shopify.formatMoney(variant.price, "{{ shop.money_format }}")); 
      } else {
-      jQuery('#product-price-' + productjson.id + '-frontpage').html('<span class="product-price">'+ Shopify.formatMoney(variant.price, "") + '</span>' );
-      jQuery('#external-product-price').html(Shopify.formatMoney(variant.price, ""));                                                                                                                     
-    }        
+      jQuery('#product-price-' + productjson.id + '-frontpage').html('<span class="product-price">'+ Shopify.formatMoney(variant.price, "{{ shop.money_format }}") + '</span>' );
+      jQuery('#external-product-price').html(Shopify.formatMoney(variant.price, "{{ shop.money_format }}"));                                                                                                                     
+    }
+                                                                 
+                                                                 
+     {% if settings.quadpay %}   
+      {% assign new_money_format = shop.money_format | remove: '$' %}
+      jQuery('#product-price-{{ product.id }}').parent().find('quadpay-widget').attr('amount', Shopify.formatMoney(variant.price, "{{ new_money_format }}") );
+      {% endif %}                                                                             
 
   } else {
     // variant doesn't exist.
     jQuery('#product-price-' + productjson.id + '-frontpage').empty();
     jQuery('#backorder-' + productjson.id + '-frontpage').addClass('hidden');
-    jQuery('#add-' + productjson.id + '-frontpage').val(null).addClass('disabled').prop('disabled', true);
+    jQuery('#add-' + productjson.id + '-frontpage').val({{ unavailable | json }}).addClass('disabled').prop('disabled', true);
   }
 
 };
