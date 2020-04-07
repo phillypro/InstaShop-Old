@@ -1,1 +1,146 @@
-[{"name":"Site Authorization Key","settings":[{"type":"text","id":"password"}]},{"name":"Google SEO","settings":[{"content":"SEO Information","type":"header"},{"id":"home_title","label":"Homepage Title","type":"text"},{"id":"home_desc","label":"Website Description","type":"textarea"},{"id":"favicon_image","label":"Favicon image","type":"image_picker"},{"id":"home_image","label":"Homepage image","type":"image_picker"}]},{"name":"Add Booking","settings":[{"type":"header","content":"Step 1. Create Page"},{"type":"paragraph","content":"add page called booking, and set that pages template option to page.booking [Click here to Add Page](\/admin\/pages\/new)"},{"type":"header","content":"Step 2. Add Your Styleseat\/Acuity"},{"type":"paragraph","content":"if you haven't done so already, sign up for styleseat or acuity scheduling then add the link to your profile below"},{"id":"styleseaturl","label":"Styleseat Or Acuity Scheduling URL","type":"url"}]},{"name":"Stories","settings":[{"content":"Stories Settings","type":"header"},{"type":"checkbox","id":"hidestories","label":"Show Stories","default":true,"info":"disable this if you want to hide stories functionality"}]},{"name":"Product Page","settings":[{"content":"Add to cart Text","type":"header"},{"id":"addtocarttext","label":"Add to Cart Text","type":"text","default":"Add to bag"},{"content":"Yotpo Settings","type":"header"},{"id":"yotpo_password","label":"Yotpo Password","type":"text"}]}]
+[
+  {
+    "name": "Site Authorization Key",
+    "settings": [
+      {
+        "type": "text",
+        "id": "password"
+      }
+    ]
+  },
+  {
+    "name": "Google SEO",
+    "settings": [
+      {
+        "content": "SEO Information",
+        "type": "header"
+      },
+      {
+        "id": "home_title",
+        "label": "Homepage Title",
+        "type": "text"
+      },
+      {
+        "id": "home_desc",
+        "label": "Website Description",
+        "type": "textarea"
+      },
+      {
+        "id": "favicon_image",
+        "label": "Favicon image",
+        "type": "image_picker"
+      },
+      {
+        "id": "home_image",
+        "label": "Homepage image",
+        "type": "image_picker"
+      }
+    ]
+  },
+  {
+    "name": "Add Booking",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Step 1. Create Page"
+      },
+      {
+        "type": "paragraph",
+        "content": "add page called booking, and set that pages template option to page.booking [Click here to Add Page](\/admin\/pages\/new)"
+      },
+      {
+        "type": "header",
+        "content": "Step 2. Add Your Styleseat\/Acuity"
+      },
+      {
+        "type": "paragraph",
+        "content": "if you haven't done so already, sign up for styleseat or acuity scheduling then add the link to your profile below"
+      },
+      {
+        "id": "styleseaturl",
+        "label": "Styleseat Or Acuity Scheduling URL",
+        "type": "url"
+      }
+    ]
+  },
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Yotpo Reviews"
+      },
+      {
+        "type": "text",
+        "id": "yotpoappkey",
+        "label": "Yotpo App key"
+      },
+      {
+        "type": "header",
+        "content": "App Helpers"
+      },
+      {
+        "id": "boldoptions",
+        "default": false,
+        "label": "Enable Bold Options",
+        "info": "This Option Replaces Theme Installation for Bold Options App",
+        "type": "checkbox"
+      }
+    ],
+    "name": "Apps and Services"
+  },
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Payment Methods"
+      },
+      {
+        "id": "quadpay",
+        "default": false,
+        "label": "Enable Quadpay",
+        "type": "checkbox"
+      }
+    ],
+    "name": "Payment Gateways"
+  },
+  {
+    "name": "Stories",
+    "settings": [
+      {
+        "content": "Stories Settings",
+        "type": "header"
+      },
+      {
+        "type": "checkbox",
+        "id": "hidestories",
+        "label": "Show Stories",
+        "default": true,
+        "info": "disable this if you want to hide stories functionality"
+      }
+    ]
+  },
+  {
+    "name": "Product Page",
+    "settings": [
+      {
+        "content": "Add to cart Text",
+        "type": "header"
+      },
+      {
+        "id": "addtocarttext",
+        "label": "Add to Cart Text",
+        "type": "text",
+        "default": "Add to bag"
+      },
+      {
+        "content": "Yotpo Settings",
+        "type": "header"
+      },
+      {
+        "id": "yotpo_password",
+        "label": "Yotpo Password",
+        "type": "text"
+      }
+    ]
+  }
+]
