@@ -86,6 +86,12 @@
           <h2>Total</h2>
          <span id="cart-total">{% include 'price' with cart.total_price %}</span>
         </li>  
+        {% if settings.quadpay %}        
+{% comment %} <!-- Insert QuadPay Widget --> {% endcomment %}
+<div class="quadpay" style="min-height:20px;font-size: 14px;">
+  <quadpay-widget amount={{ cart.total_price | divided_by: 100.00 }} alignment="right"></quadpay-widget>
+</div>        
+{% endif %}     
       </ul>
       <div>
       <input id="checkoutnow" type="submit" name="checkout" value="Continue" />   
