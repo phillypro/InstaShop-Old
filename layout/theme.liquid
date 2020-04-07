@@ -343,5 +343,14 @@ overflow:hidden;
      {% include 'ajaxify-cart' %}
      {{ 'cart.js' | asset_url | script_tag }} 
  {{ 'setup.js' | asset_url | script_tag }} 
+  
+  
+{% if settings.quadpay %}  
+<!-- {% comment %} QuadPay: Older Browsers {% endcomment %} -->
+<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.4/webcomponents-loader.js" type="application/javascript"></script>
+<script defer nomodule src="https://widgets.quadpay.com/es5/quadpay-widget-2.2.5.js" type="application/javascript"></script>
+<!-- {% comment %} QuadPay: Modern Browsers {% endcomment %} -->
+<script async src="https://widgets.quadpay.com/quadpay-widget-2.2.5.js" type="application/javascript"></script>  
+{% endif %}  
 </body>
 </html>  
