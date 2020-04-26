@@ -9,8 +9,11 @@
 {% endif %}
 {% endcase %}
 {% endfor %}   
-
+{% unless reviewsum == 0 %} 
 {% assign totalscore = reviewsum | divided_by: reviewcount | round %} 
+{% endunless %}
+
+
 
 
 {% if template != 'product' %}
